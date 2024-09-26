@@ -1,0 +1,65 @@
+
+syntax = "proto3";
+package auth;
+
+option go_package = "/authpb";
+
+
+service Auth{
+    rpc Login(LoginRequest) returns (ResponseRequestLogin);
+    rpc User(empty) returns (ResponseGetBulk);
+    rpc Update(Name) returns (ResponseRequest);
+    rpc delete(DeletedId) returns (ResponseRequest);
+}
+
+
+message LoginRequest{
+    int64 role_id = 1;
+    string name = 2;
+    string email = 3; 
+    string password = 4;
+}
+
+
+message Name{
+    string name = 1;
+    
+}
+
+message DeletedId{
+    int64 id = 1;
+}
+message ResponseRequest {
+    bool status = 1;
+    string message = 2;
+}
+
+message ResponseRequestLogin {
+    bool status = 1;
+    string message = 2;
+    Data data =3;
+}
+message empty{}
+
+message ResponseGetBulk {
+    bool status = 1;
+    string message = 2;
+    UserData data = 3;
+
+}
+
+message UserData{
+    repeated UserInfo user = 1;
+}
+
+message Data {
+    string access_token = 1;
+}
+
+message UserInfo{
+    int64 role_id = 1;
+    string role_name = 2;
+    string name =3;
+    string email = 4;
+    string last_access= 5;
+}
